@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "WinUI3WindowMenuStyle (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "WinUI3WindowMenuStyle (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
