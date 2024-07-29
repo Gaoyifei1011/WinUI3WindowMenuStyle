@@ -56,11 +56,11 @@ namespace WinUI3WindowMenuStyle
             IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
 
-            // ÎªÓ¦ÓÃÖ÷´°¿ÚÌí¼Ó´°¿Ú¹ı³Ì
+            // ä¸ºåº”ç”¨ä¸»çª—å£æ·»åŠ çª—å£è¿‡ç¨‹
             mainWindowSubClassProc = new SUBCLASSPROC(MainWindowSubClassProc);
             Comctl32Library.SetWindowSubclass((IntPtr)AppWindow.Id.Value, Marshal.GetFunctionPointerForDelegate(mainWindowSubClassProc), 0, IntPtr.Zero);
 
-            // Îª·Ç¹¤×÷ÇøµÄ´°¿ÚÉèÖÃÏàÓ¦µÄ´°¿ÚÑùÊ½£¬Ìí¼Ó´°¿Ú¹ı³Ì
+            // ä¸ºéå·¥ä½œåŒºçš„çª—å£è®¾ç½®ç›¸åº”çš„çª—å£æ ·å¼ï¼Œæ·»åŠ çª—å£è¿‡ç¨‹
             IntPtr inputNonClientPointerSourceHandle = User32Library.FindWindowEx((IntPtr)AppWindow.Id.Value, IntPtr.Zero, "InputNonClientPointerSource", null);
 
             if (inputNonClientPointerSourceHandle != IntPtr.Zero)
@@ -76,7 +76,7 @@ namespace WinUI3WindowMenuStyle
         }
 
         /// <summary>
-        /// ´°¿Ú»¹Ô­
+        /// çª—å£è¿˜åŸ
         /// </summary>
         private void OnRestoreClicked(object sender, RoutedEventArgs args)
         {
@@ -84,7 +84,7 @@ namespace WinUI3WindowMenuStyle
         }
 
         /// <summary>
-        /// ´°¿ÚÒÆ¶¯
+        /// çª—å£ç§»åŠ¨
         /// </summary>
         private void OnMoveClicked(object sender, RoutedEventArgs args)
         {
@@ -97,7 +97,7 @@ namespace WinUI3WindowMenuStyle
         }
 
         /// <summary>
-        /// ´°¿Ú´óĞ¡
+        /// çª—å£å¤§å°
         /// </summary>
         private void OnSizeClicked(object sender, RoutedEventArgs args)
         {
@@ -110,7 +110,7 @@ namespace WinUI3WindowMenuStyle
         }
 
         /// <summary>
-        /// ´°¿Ú×îĞ¡»¯
+        /// çª—å£æœ€å°åŒ–
         /// </summary>
         private void OnMinimizeClicked(object sender, RoutedEventArgs args)
         {
@@ -118,7 +118,7 @@ namespace WinUI3WindowMenuStyle
         }
 
         /// <summary>
-        /// ´°¿Ú×î´ó»¯
+        /// çª—å£æœ€å¤§åŒ–
         /// </summary>
         private void OnMaximizeClicked(object sender, RoutedEventArgs args)
         {
@@ -126,7 +126,7 @@ namespace WinUI3WindowMenuStyle
         }
 
         /// <summary>
-        /// ´°¿Ú¹Ø±Õ
+        /// çª—å£å…³é—­
         /// </summary>
         private void OnCloseClicked(object sender, RoutedEventArgs args)
         {
@@ -134,13 +134,13 @@ namespace WinUI3WindowMenuStyle
         }
 
         /// <summary>
-        /// Ó¦ÓÃÖ÷´°¿ÚÏûÏ¢´¦Àí
+        /// åº”ç”¨ä¸»çª—å£æ¶ˆæ¯å¤„ç†
         /// </summary>
         private IntPtr MainWindowSubClassProc(IntPtr hWnd, WindowMessage Msg, UIntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData)
         {
             if (Msg is WindowMessage.WM_SYSCOMMAND)
             {
-                // Ñ¡Ôñ´°¿ÚÓÒ¼ü²Ëµ¥µÄÌõÄ¿Ê±½ÓÊÕµ½µÄÏûÏ¢
+                // é€‰æ‹©çª—å£å³é”®èœå•çš„æ¡ç›®æ—¶æ¥æ”¶åˆ°çš„æ¶ˆæ¯
 
                 SYSTEMCOMMAND sysCommand = (SYSTEMCOMMAND)(wParam.ToUInt32() & 0xFFF0);
 
@@ -170,13 +170,13 @@ namespace WinUI3WindowMenuStyle
         }
 
         /// <summary>
-        /// Ó¦ÓÃÍÏ×§ÇøÓò´°¿ÚÏûÏ¢´¦Àí
+        /// åº”ç”¨æ‹–æ‹½åŒºåŸŸçª—å£æ¶ˆæ¯å¤„ç†
         /// </summary>
         private IntPtr InputNonClientPointerSourceSubClassProc(IntPtr hWnd, WindowMessage Msg, UIntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData)
         {
             switch (Msg)
             {
-                // µ±ÓÃ»§°´ÏÂÊó±ê×ó¼üÊ±£¬¹â±êÎ»ÓÚ´°¿ÚµÄ·Ç¹¤×÷ÇøÄÚµÄÏûÏ¢
+                // å½“ç”¨æˆ·æŒ‰ä¸‹é¼ æ ‡å·¦é”®æ—¶ï¼Œå…‰æ ‡ä½äºçª—å£çš„éå·¥ä½œåŒºå†…çš„æ¶ˆæ¯
                 case WindowMessage.WM_NCLBUTTONDOWN:
                     {
                         if (TitlebarMenuFlyout.IsOpen)
@@ -185,10 +185,11 @@ namespace WinUI3WindowMenuStyle
                         }
                         break;
                     }
-                // µ±ÓÃ»§°´ÏÂÊó±êÓÒ¼ü²¢ÊÍ·ÅÊ±£¬¹â±êÎ»ÓÚ´°¿ÚµÄ·Ç¹¤×÷ÇøÄÚµÄÏûÏ¢
+                // å½“ç”¨æˆ·æŒ‰ä¸‹é¼ æ ‡å³é”®å¹¶é‡Šæ”¾æ—¶ï¼Œå…‰æ ‡ä½äºçª—å£çš„éå·¥ä½œåŒºå†…çš„æ¶ˆæ¯
                 case WindowMessage.WM_NCRBUTTONUP:
                     {
-                        if (Content is not null && Content.XamlRoot is not null)
+                        // HTCAPTION åœ¨æ ‡é¢˜æ ä¸­
+                        if (wParam.ToUInt32() is 2 && Content is not null && Content.XamlRoot is not null)
                         {
                             PointInt32 screenPoint = new(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16);
                             Point localPoint = contentCoordinateConverter.ConvertScreenToLocal(screenPoint);
