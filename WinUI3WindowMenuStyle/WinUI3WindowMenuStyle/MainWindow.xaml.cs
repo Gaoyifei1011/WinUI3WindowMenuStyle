@@ -68,6 +68,37 @@ namespace WinUI3WindowMenuStyle
                 inputNonClientPointerSourceSubClassProc = new SUBCLASSPROC(InputNonClientPointerSourceSubClassProc);
                 Comctl32Library.SetWindowSubclass((IntPtr)AppWindow.Id.Value, Marshal.GetFunctionPointerForDelegate(inputNonClientPointerSourceSubClassProc), 0, IntPtr.Zero);
             }
+
+            AppWindow.Changed += OnAppWindowChanged;
+        }
+
+        private void OnSizeChanged(object sender, WindowSizeChangedEventArgs args)
+        {
+            if (TitlebarMenuFlyout.IsOpen)
+            {
+                TitlebarMenuFlyout.Hide();
+            }
+
+            if (overlappedPresenter is not null)
+            {
+                IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
+            }
+        }
+
+        private void OnAppWindowChanged(AppWindow sender, AppWindowChangedEventArgs args)
+        {
+            if (args.DidPositionChange)
+            {
+                if (TitlebarMenuFlyout.IsOpen)
+                {
+                    TitlebarMenuFlyout.Hide();
+                }
+
+                if (overlappedPresenter is not null)
+                {
+                    IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
+                }
+            }
         }
 
         private void myButton_Click(object sender, RoutedEventArgs args)
